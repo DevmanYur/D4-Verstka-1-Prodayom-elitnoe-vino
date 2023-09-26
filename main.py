@@ -6,12 +6,11 @@ import pandas
 import collections
 import datetime
 
-import os
 from environs import Env
 
-
 env = Env()
-env.read_env()
+env.read_env()  # read .env file, if it exists
+
 
 
 def get_delta_year():
@@ -44,8 +43,8 @@ def main():
 
     template = env.get_template('template.html')
 
-    products_from_file = pandas.read_excel(io=env.str('PRODUCTS_FILE'),
-                                           sheet_name=env.str('SHEET_NAME'),
+    products_from_file = pandas.read_excel(io='wine3.xlsx',
+                                           sheet_name='Лист1',
                                            na_values='znachenie_nan',
                                            keep_default_na=False
                                            )
@@ -70,4 +69,10 @@ def main():
 
 
 if __name__ == '__main__':
+    gh_user = env("GITHUB_USER")  # => 'sloria'
+    gh_user2 = env("PRODUCTS_FILE")
+    print(env("PRODUCTS_FILE"))
+
+
     main()
+
