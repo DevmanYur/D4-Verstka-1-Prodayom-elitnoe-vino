@@ -6,17 +6,11 @@ import pandas
 import collections
 import datetime
 
-from environs import Env
-
-env = Env()
-env.read_env()  # read .env file, if it exists
-
-
 
 def get_delta_year():
-    date_foundation = datetime.datetime(year=1920, month=1, day=1)
-    date_now = datetime.datetime.now()
-    delta = date_now - date_foundation
+    foundation_date = datetime.datetime(year=1920, month=1, day=1)
+    now_date = datetime.datetime.now()
+    delta = now_date - foundation_date
     seconds = delta.total_seconds()
     years = seconds / 60 / 60 / 24 / 365
     return int(years)
@@ -45,7 +39,6 @@ def main():
 
     products_from_file = pandas.read_excel(io='wine3.xlsx',
                                            sheet_name='Лист1',
-                                           na_values='znachenie_nan',
                                            keep_default_na=False
                                            )
 
@@ -69,10 +62,5 @@ def main():
 
 
 if __name__ == '__main__':
-    gh_user = env("GITHUB_USER")  # => 'sloria'
-    gh_user2 = env("PRODUCTS_FILE")
-    print(env("PRODUCTS_FILE"))
-
-
     main()
 
