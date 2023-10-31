@@ -44,19 +44,12 @@ def main():
         products_from_file = pandas.read_excel(io=glogal_env.str('FILE'),
                                                keep_default_na=False
                                                )
-        print("Запущен файл из переменной окружения FILE")
     except FileNotFoundError:
-        try:
-            products_from_file = pandas.read_excel(io='wine3.xlsx',
-                                                   keep_default_na=False
-                                                   )
-            print("Запущен файл по-умолчанию wine3.xlsx")
-        except :
-            print('''
-            Файл назначенный по-умолчанию wine3.xlsx не найден. 
-            Определите переменную окружения FILE 
-            или разместите в проекте файл wine3.xlsx
-            ''')
+        products_from_file = pandas.read_excel(io='wine3.xlsx',
+                                               keep_default_na=False
+                                               )
+        print("Путь к файлу не найден")
+
     all_products = products_from_file.to_dict(orient='records')
     products = collections.defaultdict(list)
     for product in all_products:
