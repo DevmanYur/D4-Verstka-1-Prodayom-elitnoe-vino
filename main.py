@@ -31,25 +31,15 @@ def get_ending_year(year):
 
 
 def main():
-    glogal_env = Env()
-    glogal_env.read_env()
-    env = Environment(
+    env = Env()
+    env.read_env()
+    way = Environment(
         loader=FileSystemLoader('.'),
         autoescape=select_autoescape(['html', 'xml'])
     )
 
-    template = env.get_template('template.html')
-
-    try:
-        products_from_file = pandas.read_excel(io=glogal_env.str('FILE'),
-                                               keep_default_na=False
-                                               )
-    except FileNotFoundError:
-        products_from_file = pandas.read_excel(io='wine3.xlsx',
-                                               keep_default_na=False
-                                               )
-        print("Путь к файлу не найден")
-
+    template = way.get_template('template.html')
+    products_from_file = pandas.read_excel(io=env.str('FILE', 'wine3.xlsx'))
     all_products = products_from_file.to_dict(orient='records')
     products = collections.defaultdict(list)
     for product in all_products:
